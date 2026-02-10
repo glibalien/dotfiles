@@ -60,3 +60,6 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+# Cargo binaries
+export PATH="$HOME/.cargo/bin:$PATH"
