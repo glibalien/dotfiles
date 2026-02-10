@@ -30,11 +30,19 @@ setopt HIST_IGNORE_SPACE       # Don't save commands starting with space
 autoload -Uz compinit
 compinit
 
-# Autosuggestions (grey text completion - hit right arrow to accept)
-source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+# Autosuggestions (check Fedora location first, then Arch)
+if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+elif [ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
-# Syntax highlighting (green=valid, red=invalid)
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Syntax highlighting (check Fedora location first, then Arch)
+if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+elif [ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -43,7 +51,10 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' menu select
 
 # Kitty completions
-source <(kitty + complete setup zsh)
+# Kitty completions (if available)
+if command -v kitty &> /dev/null; then
+    source <(kitty + complete setup zsh)
+fi
 
 # ============================================
 # CUSTOM CONFIG FROM BASHRC
